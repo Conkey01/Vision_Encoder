@@ -103,7 +103,7 @@ cifar_transformed = datasets.STL10(root="/tmp/data", split="train", download=Tru
 GALLERY_SIZE = len(cifar_transformed)
 loader = torch.utils.data.DataLoader(cifar_transformed, batch_size=128, shuffle=False)
 
-print(f"Extracting embeddings for {GALLERY_SIZE} images...")
+print(f"Extracting embeddings for {GALLERY_SIZE} images from STL-10...")
 gallery_embs = []
 with torch.no_grad():
     for batch_x, _ in loader:
