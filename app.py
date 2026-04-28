@@ -100,9 +100,8 @@ cifar_raw = datasets.STL10(root="/tmp/data", split="train", download=True)
 CIFAR_CLASSES = ["airplane", "bird", "car", "cat", "deer", "dog", "horse", "monkey", "ship", "truck"]
 cifar_transformed = datasets.STL10(root="/tmp/data", split="train", download=True, transform=inference_transform)
 
-GALLERY_SIZE = 10000
-subset = torch.utils.data.Subset(cifar_transformed, list(range(GALLERY_SIZE)))
-loader = torch.utils.data.DataLoader(subset, batch_size=128, shuffle=False)
+GALLERY_SIZE = len(cifar_transformed)
+loader = torch.utils.data.DataLoader(cifar_transformed, batch_size=128, shuffle=False)
 
 print(f"Extracting embeddings for {GALLERY_SIZE} images...")
 gallery_embs = []
