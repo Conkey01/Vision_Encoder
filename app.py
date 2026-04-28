@@ -75,7 +75,7 @@ app = FastAPI()
 # CORS: Allow your frontend website to talk to this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace "*" with your actual website URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -94,11 +94,12 @@ inference_transform = transforms.Compose([
 ])
 
 # --- 3. LOAD CIFAR-10 & PRE-COMPUTE EMBEDDINGS ---
-print("Downloading CIFAR-10...")
-cifar_raw = datasets.CIFAR10(root="./data", train=True, download=True)
+# CRITICAL: Hugging Face only allows writes to /tmp
+print("Downloading CIFAR-10 to /tmp/data ...")
+cifar_raw = datasets.CIFAR10(root="/tmp/data", train=True, download=True)
 CIFAR_CLASSES = cifar_raw.classes
 
-cifar_transformed = datasets.CIFAR10(root="./data", train=True, transform=inference_transform)
+cifar_transformed = datasets.CIFAR10(root="/tmp/data", train=True, transform=inference_transform)
 
 GALLERY_SIZE = 10000
 subset = torch.utils.data.Subset(cifar_transformed, list(range(GALLERY_SIZE)))
@@ -121,7 +122,7 @@ def pil_to_base64(img):
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
 
 # --- 4. API ENDPOINTS ---
-@app.get("/health")
+@app.get("/")
 def health():
     return {"status": "running", "gallery_size": GALLERY_SIZE}
 
