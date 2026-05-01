@@ -1,8 +1,1 @@
----
-title: Minivit Visual Search
-emoji: 🔍
-colorFrom: blue
-colorTo: purple
-sdk: docker
-app_port: 7860
----
+A vision encoder to learn robust representations from generic images, the Untitled16_2.ipynb contains the code to train the model and the Vision_encoder.pdf is an example of data going through the network. It has been deployed on: https://conkey01.github.io/Vision_Encoder/
